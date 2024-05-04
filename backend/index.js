@@ -4,9 +4,11 @@ import bookRoutes from "./routes/bookRoutes.js";
 import { Book } from "./models/bookModel.js";
 import { validateBookFields } from "./helper.js";
 import mongoose from "mongoose";
+import cors from 'cors';
 
 
 const app = express();
+app.use(cors()); // Modify this to resctrict
 app.use(express.json()); // This middleware allows us to parse JSON data in the request body
 
 
