@@ -6,6 +6,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import axios from 'axios';
+import Modal from '../components/Modal';
 
 
 const Home = () => {
@@ -24,6 +25,18 @@ const Home = () => {
                 setLoading(false)
             }) 
     }, [])
+
+    const deleteBook = (id: string) => { 
+        // console.log(id)
+        axios.delete(`http://localhost:5555/books/${id}`)
+            .then((response) => {
+                console.log(response)
+                setBooks(books.filter((book: any) => book._id !== id))
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
 
   return (
@@ -60,18 +73,21 @@ const Home = () => {
                                     <td className='flex-row justify-center items-center space-x-5 border p-4 '>
                                         <Link to={`/books/details/${book._id}`} className='btn btn-secondary'><BsInfoCircle className='inline-block'/> Show</Link>
                                         <Link to={`/books/edit/${book._id}`} className='btn btn-primary'><AiOutlineEdit className='inline-block'/> Edit</Link>
-                                        <Link to={`/books/delete/${book._id}`} className='btn btn-danger'><MdOutlineDelete className='inline-block'/> Delete</Link>
+                                        <Modal bID={book._id} title={book.title} onClick={() => deleteBook(book._id)}>
+                                            Are you sure you want to delete this {book.title}?
+                                            {/* <button type="button" className="btn btn-secondary" onClick={() => deleteBook(book._id)}> <MdOutlineDelete className='inline-block'/> Delete</button> */}
+                                        </Modal>
                                     </td>
                                 </tr>
                             ))
                         }
                     </tbody>
                 </table>
-
-
                 </div>
             )
         }
+
+        
     </div>
   )
 }
