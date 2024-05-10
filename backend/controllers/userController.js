@@ -48,6 +48,9 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 }) 
 
+// @desc create new user
+// POST /api/users/
+// 
 const getAllUsers = asyncHandler(async(req, res) => {
     const users = await User.find({})
     res.status(201).json({users: users})
@@ -65,11 +68,15 @@ const logoutUser = asyncHandler(async(req, res) => {
 
 })
 
+// @desc get user profile
+// GET /api/users/profile
 const getUserProfile = asyncHandler(async(req, res) => {
     const user = {_id: req.user._id, email: req.user.email}
     res.status(200).json(user)
 })
 
+// @desc update user profile
+// PUT /api/users/profile
 const updateUserProfile = asyncHandler(async(req, res) => {
     const user = await User.findById(req.user._id);
     if (user) {
@@ -86,8 +93,6 @@ const updateUserProfile = asyncHandler(async(req, res) => {
         res.status(404);
         throw new Error('User not found')
     }
-
-    // res.status(200).json({message: "Message receieved"})
 })
 
 
