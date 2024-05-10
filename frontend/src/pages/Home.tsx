@@ -1,20 +1,30 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Spinner from '../Spinner'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import axios from 'axios';
 import Modal from '../components/Modal';
+import { useSelector } from 'react-redux';
 
 
 const Home = () => {
+    const navigate = useNavigate()
+
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(false)
+    const userInfo = useSelector((state) => state.auth)
     useEffect(() => {
         setLoading(true);
-        axios.get('http://localhost:5555/books')
+        if (!userInfo || Object.keys(userInfo).length === 0) {
+            console.log("No user info found, navigating to login...");
+            navigate('/login');
+            return;
+        }
+
+        axios.get('http://localhost:5551/books')
             .then((response) => {
                 setBooks(response.data.data)
                 console.log(response.data.data)
@@ -24,7 +34,7 @@ const Home = () => {
             }).finally(() => {
                 setLoading(false)
             }) 
-    }, [])
+    }, [userInfo, navigate])
 
     const deleteBook = (id: string) => { 
         // console.log(id)
