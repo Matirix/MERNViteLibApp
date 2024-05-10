@@ -20,7 +20,6 @@ const Login = () => {
     }
   }, [navigate, userInfo])
 
-  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     email: '',
     password: ''
@@ -66,7 +65,7 @@ const Login = () => {
                       <Link to="/register" className='btn'> Don't have one? Sign up! </Link>
                     </div>
                 </form>
-                {loading && <Spinner />}
+                {isLoading && <Spinner />}
             </div>
         </div>
   )

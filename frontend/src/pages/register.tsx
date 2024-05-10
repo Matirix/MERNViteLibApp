@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Spinner from '../Spinner';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {useRegisterMutation} from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
@@ -10,8 +10,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [register, { isLoading, error}] = useRegisterMutation();
-  const userInfo = useSelector((state) => state.auth)
+  const [register] = useRegisterMutation();
 
   const [form, setForm] = useState({
     email: '',

@@ -2,16 +2,42 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { BrowserRouter } from 'react-router-dom';
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import store from './store.js';
 import { Provider } from 'react-redux';
+import Home from './pages/Home'
+import CreateBook from './pages/CreateBook'
+import EditBook from './pages/EditBook'
+import ShowBook from './pages/ShowBook'
+import './App.css'
+import Login from './pages/login'
+import Register from './pages/register'
+import 'react-toastify/dist/ReactToastify.css'
+import PrivateRoute from './components/PrivateRoute.tsx';
+import UpdateProfile from './pages/UpdateProfile.tsx';
+
+
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      <Route index={true} path="/login" element={<Login/>} />
+      <Route index={true} path="/register" element={<Register/>} />
+      <Route path='' element={<PrivateRoute/>}>
+        <Route path="/" element={<Home/>} />
+        <Route path="/profile" element={<UpdateProfile/>} />
+        <Route path="/books/create" element={<CreateBook/>} />
+        <Route path="/books/details/:id" element={<ShowBook/>} />
+        <Route path="/books/edit/:id" element={<EditBook/>} />
+      </Route>
+    </Route>
+
+));
 
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-  <BrowserRouter>  
-    <App />
-  </BrowserRouter>
+    <RouterProvider router={router}/>
   </Provider>
 )
