@@ -6,11 +6,14 @@ const { mongoDBURL, PORT } = process.env;
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import userRoutes from './routes/userRoutes.js'
 import 'dotenv/config'
+import 'cookie-parser';
+import cookieParser from "cookie-parser";
 
 
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 app.use(cors()); // Modify this to resctrict
 app.use(express.json()); // This middleware allows us to parse JSON data in the request body
 app.use('/api/books', bookRoutes);

@@ -54,16 +54,40 @@ const getAllUsers = asyncHandler(async(req, res) => {
 
 })
 
+// @desc log user out
+// POST /api/users/logout
 const logoutUser = asyncHandler(async(req, res) => {
-    res.status(200).json({message: "Message receieved"})
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0)
+    })
+    res.status(201).json({message: "Successfully logged out!"})
+
 })
 
 const getUserProfile = asyncHandler(async(req, res) => {
-    res.status(200).json({message: "Message receieved"})
+    const user = {_id: req.user._id, email: req.user.email}
+    res.status(200).json(user)
 })
 
 const updateUserProfile = asyncHandler(async(req, res) => {
-    res.status(200).json({message: "Message receieved"})
+    const user = await User.findById(req.user._id);
+    if (user) {
+        user.email = req.body.email || user.email
+        if (req.body.password) {
+            user.password = req.body.password;
+        } 
+        const updatedUser = await user.save();
+        res.status(200).json({
+            _id: updatedUser._id,
+            email: updatedUser.email,  
+        })
+    } else {
+        res.status(404);
+        throw new Error('User not found')
+    }
+
+    // res.status(200).json({message: "Message receieved"})
 })
 
 
