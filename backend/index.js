@@ -1,10 +1,10 @@
 import express from "express";
-import {PORT, mongoDBURL } from "./config.js";
 import bookRoutes from "./routes/bookRoutes.js";
-import { Book } from "./models/bookModel.js";
-import { validateBookFields } from "./helper.js";
 import mongoose from "mongoose";
 import cors from 'cors';
+const { mongoDBURL, PORT } = process.env;
+import 'dotenv/config'
+
 
 
 const app = express();
