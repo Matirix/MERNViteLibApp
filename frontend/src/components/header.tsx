@@ -1,11 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { useLogoutMutation } from '../slices/usersApiSlice'
+import { useLogoutMutation } from '../slices/usersApiSlice.ts'
 import { logout } from '../slices/authSlice.ts';
+import { RootState } from '../store.ts';
 const Header = () => {
     const navigate = useNavigate()
-    const { userInfo } = useSelector((state) => state.auth)
+    const { userInfo } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
     const [logoutApiCall] = useLogoutMutation()
 

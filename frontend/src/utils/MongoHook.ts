@@ -9,15 +9,20 @@ interface Book {
 }
 
 export const useMongoHook = (path: string) => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<Book>()
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<Error | null>(null); // Error state to store error messages
+
+
+    // console.log(path)
 
     const fetchData = async () => {
         setLoading(true)
         try {
-            const response = await axios.get( `http://localhost:5555/books/${path}`)
+            const response = await axios.get( `http://localhost:5555/api/books/${path}`)
             setData(response.data.data)
-        } catch (error) {
+        } catch (error: any) {
+            setError(error)
             console.log(error)
         } finally {
             setLoading(false)
@@ -32,7 +37,7 @@ export const useMongoHook = (path: string) => {
         fetchData()
     }
 
-    return {data, loading, refereshData}
+    return {data, loading, error, refereshData}
 
 }
 

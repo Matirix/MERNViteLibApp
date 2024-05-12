@@ -2,17 +2,17 @@ import React, {useState, useEffect} from 'react'
 import Spinner from '../Spinner';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {useLoginMutation} from '../slices/usersApiSlice';
+import {useLoginMutation} from '../slices/usersApiSlice.ts';
 import { setCredentials } from '../slices/authSlice.ts';
 import { toast } from 'react-toastify';
-
+import { RootState } from '../store.ts';
 
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, { isLoading, error}] = useLoginMutation();
-  const {userInfo} = useSelector((state) => state.auth)
+  const [login, { isLoading}] = useLoginMutation();
+  const {userInfo} = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
     if (userInfo) {
@@ -33,8 +33,8 @@ const Login = () => {
     try {
       const res = await login({email: form.email, password: form.password}).unwrap();
       dispatch(setCredentials({...res}))
-    } catch (error) {
-      toast.error(error?.data.message)
+    } catch (error: any) {
+      toast.error(error.data.message || 'An error occurred' )
     }
   }
   return (

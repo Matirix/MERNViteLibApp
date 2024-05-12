@@ -3,12 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setCredentials } from '../slices/authSlice.ts';
-import { useUpdateMutation } from '../slices/usersApiSlice';
+import { useUpdateMutation } from '../slices/usersApiSlice.ts';
 import Spinner from '../Spinner';
 
 const UpdateProfile = () => {
-    // Used for getting stuff
-    const userInfo = useSelector((state) => state.auth)
     // Used for changing stuff
     const dispatch = useDispatch()
     const navigate = useNavigate();
