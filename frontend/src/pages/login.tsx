@@ -3,7 +3,7 @@ import Spinner from '../Spinner';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {useLoginMutation} from '../slices/usersApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { setCredentials } from '../slices/authSlice.ts';
 import { toast } from 'react-toastify';
 
 

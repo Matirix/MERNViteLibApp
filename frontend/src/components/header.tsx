@@ -1,8 +1,8 @@
 import React from 'react'
-import { UseDispatch, useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLogoutMutation } from '../slices/usersApiSlice'
-import { logout } from '../slices/authSlice';
+import { logout } from '../slices/authSlice.ts';
 const Header = () => {
     const navigate = useNavigate()
     const { userInfo } = useSelector((state) => state.auth)

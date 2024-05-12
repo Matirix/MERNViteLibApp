@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { setCredentials } from '../slices/authSlice';
+import { setCredentials } from '../slices/authSlice.ts';
 import { useUpdateMutation } from '../slices/usersApiSlice';
 import Spinner from '../Spinner';
 

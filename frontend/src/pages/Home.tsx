@@ -4,7 +4,7 @@ import Spinner from '../Spinner'
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
-import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
+import { MdOutlineAddBox} from 'react-icons/md';
 import axios from 'axios';
 import Modal from '../components/Modal';
 import { useSelector } from 'react-redux';
@@ -24,7 +24,7 @@ const Home = () => {
             return;
         }
 
-        axios.get('http://localhost:5551/books')
+        axios.get('http://localhost:5551/api/books')
             .then((response) => {
                 setBooks(response.data.data)
                 console.log(response.data.data)
@@ -75,7 +75,7 @@ const Home = () => {
                     <tbody>
                         {
                             books.map((book: any, index: number) => (
-                                <tr key={book.id}>
+                                <tr key={book._id}>
                                     <td className='border p-4 text-white'>{index}</td>
                                     <td className='border p-4'>{book.title}</td>
                                     <td className='border p-4'>{book.author}</td>
