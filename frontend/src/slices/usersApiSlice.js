@@ -1,4 +1,4 @@
-import { apiSlice } from './apiSlice';
+import { apiSlice } from './apiSlice.ts';
 const USERS_URL = '/api/users/';
 
 // Injects it into apislice
