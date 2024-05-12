@@ -8,7 +8,7 @@ const EditBook = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
-    const { data, loading: loadingData } = useMongoHook(`${id}`);
+    const { data } = useMongoHook(`${id}`);
 
     const [form, setForm] = useState({
         title: '',

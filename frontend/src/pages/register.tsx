@@ -25,7 +25,7 @@ const Register = () => {
       toast.success('Account created successfully')
       console.log(res);
       navigate('/')
-    } catch (e){
+    } catch (e : any){
       toast.error(e?.data.message)
     }
   }

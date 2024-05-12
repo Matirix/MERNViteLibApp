@@ -25,7 +25,7 @@ const UpdateProfile = () => {
             dispatch(setCredentials({...res}))
             navigate('/')
             
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error?.data.message)
         }
     }

@@ -8,6 +8,7 @@ import { MdOutlineAddBox} from 'react-icons/md';
 import axios from 'axios';
 import Modal from '../components/Modal';
 import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
 
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(false)
-    const userInfo = useSelector((state) => state.auth)
+    const userInfo = useSelector((state: RootState) => state.auth)
     useEffect(() => {
         setLoading(true);
         if (!userInfo || Object.keys(userInfo).length === 0) {
