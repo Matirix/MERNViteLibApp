@@ -3,7 +3,7 @@ import { MdOutlineDelete } from 'react-icons/md';
 
 // Define the types for the props the component expects
 interface ModalProps {
-    bID: string;
+  bID: string;
   title: string;
   children: ReactNode;
   onClick: () => void;

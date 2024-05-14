@@ -71,6 +71,7 @@ const getSingleBook = asyncHandler(async(req, res) => {
 // DELETE /api/books/:id
 const deleteBook = asyncHandler(async(req, res) => {
     try {
+        console.log(req.params.id);
         const { id} = req.params;     
         const result = await Book.findByIdAndDelete(id);
 

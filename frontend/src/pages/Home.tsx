@@ -38,8 +38,8 @@ const Home = () => {
     }, [userInfo, navigate])
 
     const deleteBook = (id: string) => { 
-        // console.log(id)
-        axios.delete(`http://localhost:5555/books/${id}`)
+        console.log(id)
+        axios.delete(`http://localhost:5551/api/books/${id}`)
             .then((response) => {
                 console.log(response)
                 setBooks(books.filter((book: any) => book._id !== id))
