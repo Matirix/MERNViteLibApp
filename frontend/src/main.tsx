@@ -9,11 +9,14 @@ import CreateBook from './pages/CreateBook'
 import EditBook from './pages/EditBook'
 import ShowBook from './pages/ShowBook'
 import './App.css'
-import Login from './pages/login'
-import Register from './pages/register'
+
+
 import 'react-toastify/dist/ReactToastify.css'
 import PrivateRoute from './components/PrivateRoute.tsx';
 import UpdateProfile from './pages/UpdateProfile.tsx';
+import Login from './pages/Login.tsx';
+import Register from './pages/Register.tsx';
+import BookDetails from './pages/BookDetails.tsx';
 
 
 
@@ -24,6 +27,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/register" element={<Register/>} />
       <Route path='' element={<PrivateRoute/>}>
         <Route path="/" element={<Home/>} />
+        <Route path="/book/:id" element={<BookDetails/>} />
         <Route path="/profile" element={<UpdateProfile/>} />
         <Route path="/books/create" element={<CreateBook/>} />
         <Route path="/books/details/:id" element={<ShowBook/>} />

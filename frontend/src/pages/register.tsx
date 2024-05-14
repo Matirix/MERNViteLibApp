@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Spinner from '../Spinner';
+import Spinner from '../Spinner.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {useRegisterMutation} from '../slices/usersApiSlice.ts';
