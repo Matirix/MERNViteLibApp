@@ -26,8 +26,7 @@ const Header = () => {
 
     const handleSearch = () => {
         if (search.trim() === '') {toast.error('Please enter a search term')}
-        console.log(search)
-        // else navigate(`/search/${search}`)
+        else navigate(`/search/${search}`)
     }
 
     

@@ -17,6 +17,7 @@ import UpdateProfile from './pages/UpdateProfile.tsx';
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import BookDetails from './pages/BookDetails.tsx';
+import SearchPage from './pages/SearchPage.tsx';
 
 
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/register" element={<Register/>} />
       <Route path='' element={<PrivateRoute/>}>
         <Route path="/" element={<Home/>} />
+        <Route path="/search/:id" element={<SearchPage/>} />
         <Route path="/book/:id" element={<BookDetails/>} />
         <Route path="/profile" element={<UpdateProfile/>} />
         <Route path="/books/create" element={<CreateBook/>} />

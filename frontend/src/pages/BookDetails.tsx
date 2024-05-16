@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Spinner from '../Spinner';
 import { useNavigate } from 'react-router-dom';
-import { useBookWorkHook } from '../utils/LibHook';
+import { useBookWorkHook } from '../utils/LibHooks';
 import RatingSystem from '../components/RatingSystem';
+import { useParams } from 'react-router-dom';
 
 const BookDetails = () => {
 
     const navigate = useNavigate();
-    const { data, imageData, loading, authorData } = useBookWorkHook('OL45804W', 'L');
+    const { id } = useParams();
+    const { data, imageData, loading, authorData } = useBookWorkHook(id || '', 'L');
 ;
 
 
