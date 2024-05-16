@@ -13,15 +13,22 @@ const BookDetails = () => {
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-100">
-            <div className='w-full max-w-md p-8 space-y-4 bg-white rounded-lg shadow'>
-                <h1 className='text-2xl font-bold text-center'>Show Book</h1>
+            <div className='w-1/2 p-8 space-y-4 bg-white rounded-lg shadow'>
                 { loading ? <Spinner /> :
-                    <div className="flex">
-                        <div>
-                            <h1>{data?.title}</h1>
-
+                    <div className="flex-col">
+                        <div className='flex sm:flex-col md:flex-row space-x-2  sm:space-y-2'>
+                            <div className='w-1/2'>
+                                <img className="rounded-lg"src={imageData}></img>
+                            </div>
+                            <div className="w-1/2 flex-col space-y-2 ">
+                                <h1 className='text-2xl font-bold text-left mb-3'>{data?.title}</h1>
+                                <p className='text-md'>Author: {data?.authors.map((names) => {
+                                    return names.author + ' '
+                                })}</p>
+                                <p className="text-sm">{data?.description}</p>
+                            </div>
                         </div>
-                        <img src={imageData}></img>
+
 
                     </div>
 
