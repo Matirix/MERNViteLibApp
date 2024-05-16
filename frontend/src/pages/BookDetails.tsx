@@ -18,11 +18,13 @@ const BookDetails = () => {
                 { loading ? <Spinner /> :
                     <div className="flex flex-col lg:flex-row">
                     {/* Left Side */}
-                    <div className="lg:w-1/4">
+                    <div className="lg:w-1/4 flex flex-col">
                         <div className="space-y-3 flex flex-col items-center lg:items-start">
                             <img className="rounded-lg" src={imageData} alt="Book cover" />
                             <button className="btn w-full btn-primary">Add to Favorites</button>
-                            <RatingSystem />
+                            <div className="m-auto">
+                                <RatingSystem />
+                            </div>
                         </div>
                     </div>
                     {/* Right Side */}
