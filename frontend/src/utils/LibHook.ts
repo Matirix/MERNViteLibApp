@@ -37,7 +37,7 @@ interface DateTime {
 export const useBookWorkHook = (OLid: string, imageSize: string) => {
     const [data, setData] = useState<OLBook>()
     const [imageData, setImageData] = useState<string>();
-    const [authorData, setAuthorData] = useState<AuthorRole[]>()
+    const [authorData, setAuthorData] = useState()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<Error | null>(null); // Error state to store error messages
 
@@ -50,7 +50,9 @@ export const useBookWorkHook = (OLid: string, imageSize: string) => {
             const bookResponse = await axios.get( `https://openlibrary.org/works/${OLid}.json`)
             const imageResponse = await axios.get(`https://covers.openlibrary.org/b/id/${bookResponse.data.covers[0]}-${imageSize}.jpg`)
             setData(bookResponse.data)
-            // const authorData = bookResponse.data
+            const author = await axios.get(`https://openlibrary.org${bookResponse.data.authors[0].author.key}.json`)
+            setAuthorData(author.data.name)
+            console.log(authorData)
             setImageData(imageResponse.config.url);
         } catch (error: any) {
             setError(error)
@@ -68,6 +70,6 @@ export const useBookWorkHook = (OLid: string, imageSize: string) => {
         fetchData()
     }
 
-    return {data, imageData, loading, error, refereshData}
+    return {data, imageData, authorData, loading, error, refereshData}
 
 }
