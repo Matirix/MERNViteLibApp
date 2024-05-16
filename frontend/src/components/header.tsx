@@ -1,13 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+
 import { useLogoutMutation } from '../slices/usersApiSlice.ts'
 import { logout } from '../slices/authSlice.ts';
 import { RootState } from '../store.ts';
+import { toast } from 'react-toastify';
+
 const Header = () => {
     const navigate = useNavigate()
     const { userInfo } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
+    const [search, setSearch] = useState('')
     const [logoutApiCall] = useLogoutMutation()
 
     const logoutHandler = async () => {
@@ -20,33 +24,58 @@ const Header = () => {
         }
     }
 
+    const handleSearch = () => {
+        if (search.trim() === '') {toast.error('Please enter a search term')}
+        console.log(search)
+        // else navigate(`/search/${search}`)
+    }
+
     
   return (
     <div className="navbar bg-base-100">
+        {/* Left Side */}
     <div className="flex-1">
         <a className="btn btn-ghost text-xl">Booker</a>
     </div>
+
+
     <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
+        <label className="input input-bordered flex items-center gap-2">
+                <input type="text" className="grow" placeholder="Search" onChange={(e) => setSearch(e.target.value)}/>
+                    <button className='' onClick={handleSearch}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
+                    </button>
+                </label>
 
-        <li><a>{userInfo ? userInfo.email : <Link to={'/login'}>Login or Signup</Link>}</a></li>
+
+
+
+        {/* DropDown */}
+        <li>
+            <a>{userInfo ? " " : <Link to={'/login'}>Login or Signup</Link>}</a></li>
         {
             userInfo ? 
-            <li>
-            <details>
-            <summary>
-                Options
-            </summary>
-            <ul className="p-2 bg-base-100 rounded-t-none">
-                <li>                <button onClick={logoutHandler}>logout</button>
-</li>
-                <li>
-                <Link to={'/profile'}>Profile</Link>
 
-                </li>
-            </ul>
-            </details>
-        </li> : null
+            <li>
+                <details>
+                <summary className='m-auto p-auto'>
+                    {userInfo.email}
+                </summary>
+                <ul className="p-3 bg-base-100 w-full rounded-t-none">
+                    <li>                
+                        <button onClick={logoutHandler}>Logout</button>
+                    </li>
+                    <li>
+                        <Link to={'/profile'}>Profile</Link>
+                    </li>
+                </ul>
+                </details>
+            </li> 
+
+        
+        
+        : null
         }
        
         </ul>
