@@ -52,7 +52,6 @@ export const useBookWorkHook = (OLid: string, imageSize: string) => {
             setData(bookResponse.data)
             const author = await axios.get(`https://openlibrary.org${bookResponse.data.authors[0].author.key}.json`)
             setAuthorData(author.data.name)
-            console.log(authorData)
             setImageData(imageResponse.config.url);
         } catch (error: any) {
             setError(error)
