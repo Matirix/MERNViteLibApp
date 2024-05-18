@@ -62,6 +62,9 @@ const Header = () => {
                     {userInfo.email}
                 </summary>
                 <ul className="p-3 bg-base-100 w-full rounded-t-none">
+                    <li>
+                        <Link to={'/favourites'}>Favourites</Link>
+                    </li>
                     <li>                
                         <button onClick={logoutHandler}>Logout</button>
                     </li>

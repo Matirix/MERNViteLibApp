@@ -1,6 +1,6 @@
 import express from 'express';
-import { validateBookFields } from '../helper.js';
-import {postBook, getBooks, getSingleBook, updateBook, deleteBook} from '../controllers/bookController.js';
+import { postFavBook, getFavBooksById, getAllFavBooks } from '../controllers/favBookController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 
 // Book Routing: Create, Read, Update, and Delete
@@ -10,19 +10,14 @@ import {postBook, getBooks, getSingleBook, updateBook, deleteBook} from '../cont
 
 export const router = express.Router();
 
-router.post('/', validateBookFields, postBook);
+// Create a new favourite book entry
+router.post('/', protect, postFavBook);
 
 // Get all books in count, data json format
-router.get('/', getBooks);
+router.get('/all', getAllFavBooks);
 
-// Get a single book by id
-router.get('/:id', getSingleBook);
-
-// Deleting
-router.delete('/:id', deleteBook)
-
-// Updating
-router.put('/:id', validateBookFields, updateBook);
+// Get a single book by usersid
+router.post('/favourites', getFavBooksById);    
 
 
 export default router;

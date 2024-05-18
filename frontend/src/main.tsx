@@ -18,6 +18,7 @@ import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import BookDetails from './pages/BookDetails.tsx';
 import SearchPage from './pages/SearchPage.tsx';
+import ViewFavourites from './pages/ViewFavourites.tsx';
 
 
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
         <Route path="/books/create" element={<CreateBook/>} />
         <Route path="/books/details/:id" element={<ShowBook/>} />
         <Route path="/books/edit/:id" element={<EditBook/>} />
+        <Route path="/favourites" element={<ViewFavourites/>} />
       </Route>
     </Route>
 

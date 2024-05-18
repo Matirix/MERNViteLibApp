@@ -1,12 +1,10 @@
-import express from 'express';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import express from 'express';;
 import {  authUser,
     registerUser,
     logoutUser,
     getUserProfile,
     updateUserProfile
-,getAllUsers } from '../controllers/userController.js';
+    ,getAllUsers } from '../controllers/userController.js';
 import {protect} from '../middleware/authMiddleware.js'
 export const router = express.Router();
 
