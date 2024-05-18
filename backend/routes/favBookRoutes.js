@@ -17,7 +17,7 @@ router.post('/', protect, postFavBook);
 router.get('/all', getAllFavBooks);
 
 // Get a single book by usersid
-router.post('/favourites', getFavBooksById);    
+router.post('/favourites', protect, getFavBooksById);    
 
 
 export default router;

@@ -8,7 +8,7 @@ import asyncHandler from 'express-async-handler';
     try {
         const newFavBook = new FavBook({
             title: req.body.title,
-            userId: req.body.userId,
+            userId: req.user._id,
             olid: req.body.olid,
         })
         const favBookEntry = await FavBook.create(newFavBook);
@@ -22,9 +22,10 @@ import asyncHandler from 'express-async-handler';
 
 // @desc Get all favorite books by user id and count, data json format
 // POST /api/favBook/
+// Protected Route - Requires a JWT token to access
  export const getFavBooksById = asyncHandler(async(req, res) => {
     try {
-        const favBooks = await FavBook.find({userId: req.body.id});
+        const favBooks = await FavBook.find({userId: req.user._id});
         return res.status(200).json({
             data: favBooks,
             count: favBooks.length
