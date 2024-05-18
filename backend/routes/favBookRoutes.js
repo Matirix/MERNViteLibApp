@@ -16,7 +16,7 @@ router.post('/', protect, postFavBook);
 // Get all books in count, data json format
 router.get('/all', getAllFavBooks);
 
-// Get a single book by usersid
+// Get a all book by userid
 router.post('/favourites', protect, getFavBooksById);    
 
 

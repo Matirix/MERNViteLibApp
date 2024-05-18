@@ -5,13 +5,32 @@ import { useNavigate } from 'react-router-dom';
 import { useBookWorkHook } from '../utils/LibHooks';
 import RatingSystem from '../components/RatingSystem';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { toast } from 'react-toastify';
 
 const BookDetails = () => {
-
-    const navigate = useNavigate();
     const { id } = useParams();
     const { data, imageData, loading, authorData } = useBookWorkHook(id || '', 'L');
-;
+    const [favLoading, setFavLoading] = useState(false);
+    const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+
+    const addToFavourites = async() => {
+        setFavLoading(true);
+        try {
+            const favBook = await axios.post('/api/favBook/', {
+                title: data?.title,
+                olid: id,
+            }, { withCredentials: true })
+            toast.success(favBook.data.message)
+        } catch (error: any) {         
+            toast.error('An error occurred')
+        } finally {
+            setFavLoading(false);
+        }
+    }
+
+
 
 
     return (
@@ -23,7 +42,7 @@ const BookDetails = () => {
                     <div className="lg:w-1/4 flex flex-col">
                         <div className="space-y-3 flex flex-col items-center lg:items-start">
                             <img className="rounded-lg" src={imageData} alt="Book cover" />
-                            <button className="btn w-full btn-primary">Add to Favorites</button>
+                            <button className="btn w-full btn-primary" onClick={addToFavourites}>Add to Favorites</button>
                             <div className="m-auto">
                                 <RatingSystem />
                             </div>

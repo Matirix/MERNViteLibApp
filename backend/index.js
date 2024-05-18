@@ -15,7 +15,12 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-app.use(cors()); // Modify this to resctrict
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
+)); // Modify this to resctrict
 app.use(express.json()); // This middleware allows us to parse JSON data in the request body
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);

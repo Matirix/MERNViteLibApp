@@ -44,13 +44,13 @@ const Login = () => {
                 <h1 className='text-2xl font-bold text-center'>Login</h1>
                 <form onSubmit={handleFormSubmit} className='space-y-5'>
                     <div>
-                        <label htmlFor='title' className='block mb-2 text-sm font-medium text-gray-900'>Title</label>
+                        <label htmlFor='title' className='block mb-2 text-sm font-medium text-gray-900'>Email</label>
                         <input type='text' id='title' name='title' required
                                className='w-full p-2 border border-gray-300 rounded-md'
                                onChange={(e) => setForm({...form, email: e.target.value})}/>
                     </div>
                     <div>
-                        <label htmlFor='author' className='block mb-2 text-sm font-medium text-gray-900'>Author</label>
+                        <label htmlFor='author' className='block mb-2 text-sm font-medium text-gray-900'>Password</label>
                         <input type='text' id='author' name='author' required
                                className='w-full p-2 border border-gray-300 rounded-md'
                                onChange={(e) => setForm({...form, password: e.target.value})}/>
