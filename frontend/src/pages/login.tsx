@@ -33,6 +33,7 @@ const Login = () => {
     try {
       const res = await login({email: form.email, password: form.password}).unwrap();
       dispatch(setCredentials({...res}))
+      
     } catch (error: any) {
       toast.error(error.data.message || 'An error occurred' )
     }

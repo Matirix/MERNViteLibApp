@@ -1,5 +1,5 @@
 import express from 'express';
-import { postFavBook, getFavBooksById, getAllFavBooks } from '../controllers/favBookController.js';
+import { postFavBook, getFavBooksById, getAllFavBooks, getFavBook } from '../controllers/favBookController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 
@@ -17,7 +17,9 @@ router.post('/', protect, postFavBook);
 router.get('/all', getAllFavBooks);
 
 // Get a all book by userid
-router.post('/favourites', protect, getFavBooksById);    
+router.post('/favourites', protect, getFavBooksById);
 
+// Get a user's favourite book by id, and OLid
+router.get('/:olid', protect, getFavBook);
 
 export default router;

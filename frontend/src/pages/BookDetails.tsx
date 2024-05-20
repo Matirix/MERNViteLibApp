@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '../Spinner';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,8 @@ const BookDetails = () => {
     const { id } = useParams();
     const { data, imageData, loading, authorData } = useBookWorkHook(id || '', 'L');
     const [favLoading, setFavLoading] = useState(false);
-    const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+    const [isFavorited, setIsFavorited] = useState(false);
+    // const userInfo = useSelector((state: RootState) => state.auth.userInfo);
 
     const addToFavourites = async() => {
         setFavLoading(true);
@@ -24,12 +25,25 @@ const BookDetails = () => {
             }, { withCredentials: true })
             toast.success(favBook.data.message)
         } catch (error: any) {         
-            toast.error('An error occurred')
+            console.log(error)
+            toast.error(error.response.data.message)
         } finally {
             setFavLoading(false);
         }
     }
 
+    useEffect(() => {
+        const getFavBook = async () => {
+            try {
+                const favBook = await axios.get(`/api/favBook/${id}`, { withCredentials: true })
+                console.log(favBook)
+            } catch (error: any) {
+                console.log(error)
+            }
+        }
+        getFavBook()
+
+    }, [id])
 
 
 
@@ -42,7 +56,10 @@ const BookDetails = () => {
                     <div className="lg:w-1/4 flex flex-col">
                         <div className="space-y-3 flex flex-col items-center lg:items-start">
                             <img className="rounded-lg" src={imageData} alt="Book cover" />
-                            <button className="btn w-full btn-primary" onClick={addToFavourites}>Add to Favorites</button>
+                            {
+                                favLoading ? <Spinner /> : <button className="btn w-full btn-primary" onClick={addToFavourites}>Add to Favorites</button>
+
+                            }
                             <div className="m-auto">
                                 <RatingSystem />
                             </div>
@@ -61,8 +78,6 @@ const BookDetails = () => {
                         </div>
                     </div>
                 </div>
-                
-
                 }
 
             </div>

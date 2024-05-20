@@ -35,15 +35,21 @@ interface DateTime {
 
 const baseLink: string = "https://openlibrary.org"
 
+
+
 // Helpers
+
+// Isolates the Olid from the path
+const isolateKey = (path: string) => {
+    return path.split("/")[2]
+}
+
+
+// Fetch Images by Olid
 const fetchImageByOLid = async (OLid: string, imageSize: string = 'M') => {
     const response = await axios.get(`https://covers.openlibrary.org/b/id/${OLid}-${imageSize}.jpg`)
     return response.config.url
 }
-
-
-
-
 
 
 
