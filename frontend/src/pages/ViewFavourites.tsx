@@ -9,7 +9,7 @@ const ViewFavourites = () => {
     const userInfo = useSelector((state: RootState) => state.auth.userInfo); // Ensure correct access to userInfo
     const [favourites, setFavourites] = useState([]);
     const [loading, setLoading] = useState(true); // Add a loading state
-    const [error, setError] = useState(null); // Add an error state
+    const [error, setError] = useState(''); // Add an error state
 
     useEffect(() => {
         const fetchData = async () => {
