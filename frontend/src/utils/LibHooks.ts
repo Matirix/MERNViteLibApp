@@ -51,9 +51,38 @@ const fetchImageByOLid = async (OLid: string, imageSize: string = 'M') => {
     return response.config.url
 }
 
+interface FavBook {
+    title: string;
+    olid: string;
+}
+
+export const useFavBooks = (favBooksList: FavBook[]) => {
+    const [favBooks, setFavBooks] = useState<OLBook[]>()
+    
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+            const books = await Promise.all(favBooksList.map(async (book) => {
+                const response = await axios.get(`${baseLink}/works/${book.olid}.json`)
+                return response.data
+            }))
+            console.log(books)
+            setFavBooks(books)
+        } catch (error: any) {
+            console.log(error)
+        }
+      }
+      fetchData()
+    }, [])
+
+    return {favBooks}
+    
+}
+
 
 
 // Book Interface
+// used for useBooks
 interface Book {
     cover_i: string;
     title: string;
@@ -73,8 +102,6 @@ export const useBooks = (searchTerm: string) => {
         setLoading(true)
         try {
             const response = await axios.get( `${baseLink}/search.json?q=${searchTermQuery}&limit=5`)
-            // setBooks(response.data.docs)
-
             const imagePromises = response.data.docs.map(async (book: any) => {
                 const imageUrl = await fetchImageByOLid(book.cover_i);
                 return { ...book, imageUrl }; // Merge book data with image URL
