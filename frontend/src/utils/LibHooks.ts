@@ -35,14 +35,28 @@ interface DateTime {
 
 const baseLink: string = "https://openlibrary.org"
 
-
-export const fetchImageByOLid = async (OLid: string, imageSize: string = 'M') => {
+// Helpers
+const fetchImageByOLid = async (OLid: string, imageSize: string = 'M') => {
     const response = await axios.get(`https://covers.openlibrary.org/b/id/${OLid}-${imageSize}.jpg`)
     return response.config.url
 }
 
+
+
+
+
+
+
+// Book Interface
+interface Book {
+    cover_i: string;
+    title: string;
+    author_name: string[];
+    imageUrl?: string;
+  }
+
 export const useBooks = (searchTerm: string) => {
-    const [books, setBooks] = useState()
+    const [books, setBooks] = useState<Book[]>()
     const [amount, setAmount] = useState(0)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<Error | null>(null); // Error state to store error messages
@@ -92,11 +106,13 @@ export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
         setLoading(true)
         try {
             const bookResponse = await axios.get( `${baseLink}/works/${OLid}.json`)
-            const imageResponse = await axios.get(`https://covers.openlibrary.org/b/id/${bookResponse.data.covers[0]}-${imageSize}.jpg`)
+            const imageResponse = await fetchImageByOLid(bookResponse.data.covers[0], imageSize)
+            setImageData(imageResponse)
             setData(bookResponse.data)
             const author = await axios.get(`${baseLink}${bookResponse.data.authors[0].author.key}.json`)
+            console.log(bookResponse.data.authors[0].author.key)
             setAuthorData(author.data.name)
-            setImageData(imageResponse.config.url);
+
         } catch (error: any) {
             setError(error)
             console.log(error)
@@ -112,8 +128,6 @@ export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
     const refereshData = () => {
         fetchData()
     }
-
     return {data, imageData, authorData, loading, error, refereshData}
-
 }
 
