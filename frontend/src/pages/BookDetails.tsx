@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '../Spinner';
-import { useNavigate } from 'react-router-dom';
 import { useBookWorkHook } from '../utils/LibHooks';
 import RatingSystem from '../components/RatingSystem';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 import { toast } from 'react-toastify';
+import { generateAuthorNames } from '../utils/strings';
 
 const BookDetails = () => {
     const { id } = useParams();
     const { data, imageData, loading, authorData } = useBookWorkHook(id || '', 'L');
     const [favLoading, setFavLoading] = useState(false);
-    const [isFavorited, setIsFavorited] = useState(false);
+    // const [isFavorited, setIsFavorited] = useState(false);
     // const userInfo = useSelector((state: RootState) => state.auth.userInfo);
 
     const addToFavourites = async() => {
@@ -33,23 +31,23 @@ const BookDetails = () => {
         }
     }
 
-    useEffect(() => {
-        const getFavBook = async () => {
-            try {
-                const favBook = await axios.get(`/api/favBook/${id}`, { withCredentials: true })
-                console.log(favBook)
-            } catch (error: any) {
-                console.log(error)
-            }
-        }
-        getFavBook()
+    // useEffect(() => {
+    //     const getFavBook = async () => {
+    //         try {
+    //             const favBook = await axios.get(`/api/favBook/${id}`, { withCredentials: true })
+    //             console.log(favBook)
+    //         } catch (error: any) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     getFavBook()
 
-    }, [id])
+    // }, [id])
 
 
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-100">
+        <div className="min-h-screen flex justify-center items-center">
             <div className='lg:w-3/4 md:w-full p-8 space-y-4 bg-white lg:rounded-lg lg:shadow'>
                 { loading ? <Spinner /> :
                     <div className="flex flex-col lg:flex-row">
@@ -72,7 +70,7 @@ const BookDetails = () => {
                             {/* Header */}
                             <div className="mb-3">
                                 <h1 className="text-2xl font-bold">{data?.title}</h1>
-                                <p className="text-lg italic">{authorData}</p>
+                                <p className="text-lg italic">{generateAuthorNames(authorData ?? [])}</p>
                             </div>
                             {/* Description */}
                             <p className="text-sm">{data?.description}</p>

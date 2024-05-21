@@ -131,13 +131,13 @@ export const useBooks = (searchTerm: string) => {
 }
 
 
-// @desc Get's books from the OpenLibrary API
+// @desc Get's Book from the OpenLibrary API by OLid
 // @params OLid: string
 // @params imageSize: string
 export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
     const [data, setData] = useState<OLBook>()
     const [imageData, setImageData] = useState<string>();
-    const [authorData, setAuthorData] = useState()
+    const [authorData, setAuthorData] = useState<string[]>()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<Error | null>(null); // Error state to store error messages
 
@@ -146,14 +146,20 @@ export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
         try {
             const bookResponse = await axios.get( `${baseLink}/works/${OLid}.json`)
             const imageResponse = await fetchImagebyId(bookResponse.data.covers[0], imageSize)
+            console.log(bookResponse)
 
             // console.log(imageResponse)
             setImageData(imageResponse)
             setData(bookResponse.data)
             console.log(bookResponse.data)
-            const author = await axios.get(`${baseLink}${bookResponse.data.authors[0].author.key}.json`)
-            // console.log(bookResponse.data.authors[0].author.key)
-            setAuthorData(author.data.name)
+
+            // Map through the authors array and fetch data for each author
+            const authorPromises = bookResponse.data.authors.map(async (authorObj: any) => {
+                const response = await axios.get(`${baseLink}${authorObj.author.key}.json`);
+                return response.data.name; // Assuming you need the data property from the response
+            });
+            const authors = await Promise.all(authorPromises);
+            setAuthorData(authors)
 
         } catch (error: any) {
             setError(error)
@@ -181,6 +187,7 @@ interface FavouriteBook {
     details: OLBook;
 }
 
+// Fetches the favourite books of the current user
 export const useFetchFavourites = () => {
     const [favourites, setFavourites] = useState<FavouriteBook[]>([])
     const [loading, setLoading] = useState(false)
