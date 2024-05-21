@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom"
-import React, {useState, useEffect} from 'react'
 import { useBooks } from '../utils/LibHooks'
 import Spinner from "../Spinner"
 import { FaHeart } from "react-icons/fa"

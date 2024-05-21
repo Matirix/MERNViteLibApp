@@ -45,7 +45,7 @@ const isolateKey = (path: string) => {
 }
 
 
-// Fetch Images by Olid
+// Fetch Images by book cover id
 export const fetchImagebyId = async (coverId: string, imageSize: string = 'M') => {
     const response = await axios.get(`https://covers.openlibrary.org/b/id/${coverId}-${imageSize}.jpg`)
     return response.config.url
@@ -55,6 +55,7 @@ interface FavBook {
     title: string;
     olid: string;
 }
+
 
 export const useFavBooks = (favBooksList: FavBook[]) => {
     const [favBooks, setFavBooks] = useState<OLBook[]>()
@@ -90,6 +91,8 @@ interface Book {
     imageUrl?: string;
   }
 
+// @desc Get's books from the OpenLibrary API
+// @param searchTerm: string
 export const useBooks = (searchTerm: string) => {
     const [books, setBooks] = useState<Book[]>()
     const [amount, setAmount] = useState(0)
@@ -128,6 +131,9 @@ export const useBooks = (searchTerm: string) => {
 }
 
 
+// @desc Get's books from the OpenLibrary API
+// @params OLid: string
+// @params imageSize: string
 export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
     const [data, setData] = useState<OLBook>()
     const [imageData, setImageData] = useState<string>();
@@ -167,3 +173,45 @@ export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
     return {data, imageData, authorData, loading, error, refereshData}
 }
 
+
+interface FavouriteBook {
+    title: string;
+    olid: string; 
+    imageUri: string;
+    details: OLBook;
+}
+
+export const useFetchFavourites = () => {
+    const [favourites, setFavourites] = useState<FavouriteBook[]>([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<Error | null>(null)
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const favListResponse = await axios.post('/api/favBook/favourites', {}, { withCredentials: true });
+            const favList = favListResponse.data.data;
+
+            // Fetch additional book details for each favourite book
+            // Fetching from the OpenLibrary API side to reduce memory space from the server 
+            const books = await Promise.all(
+                favList.map(async (book: FavouriteBook) => {
+                    const response = await axios.get(`https://openlibrary.org/works/${book.olid}.json`);
+                    return { ...book, details: response.data };
+                })
+            );
+            setFavourites(books);
+        } catch (error: any) {
+            setError(error)
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    return {favourites, loading, error}
+
+}
