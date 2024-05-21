@@ -50,7 +50,7 @@ const BookDetails = () => {
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-100">
-            <div className='lg:w-3/4 md:w-3/4 p-8 space-y-4 bg-white rounded-lg shadow'>
+            <div className='lg:w-3/4 md:w-full p-8 space-y-4 bg-white lg:rounded-lg lg:shadow'>
                 { loading ? <Spinner /> :
                     <div className="flex flex-col lg:flex-row">
                     {/* Left Side */}
