@@ -9,10 +9,7 @@ const SearchPage = () => {
     const { id } = useParams()
     const {books, amount, loading, error} = useBooks(id || "")
     console.log(books)
-    // title 
-    // cover_ediition_key
-    // author_name:  string[]
-    // key: string (used for navigating to the page)
+
 
 
     const generateAuthorNames = (authors: string[]) => {
@@ -26,6 +23,10 @@ const SearchPage = () => {
     }
     const isolateWorkKey = (key: string) => {
         return key.split("/")[2]
+    }
+
+    if (loading) {
+        return <Spinner />
     }
 
 

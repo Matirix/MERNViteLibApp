@@ -46,8 +46,8 @@ const isolateKey = (path: string) => {
 
 
 // Fetch Images by Olid
-const fetchImageByOLid = async (OLid: string, imageSize: string = 'M') => {
-    const response = await axios.get(`https://covers.openlibrary.org/b/id/${OLid}-${imageSize}.jpg`)
+export const fetchImagebyId = async (coverId: string, imageSize: string = 'M') => {
+    const response = await axios.get(`https://covers.openlibrary.org/b/id/${coverId}-${imageSize}.jpg`)
     return response.config.url
 }
 
@@ -103,7 +103,7 @@ export const useBooks = (searchTerm: string) => {
         try {
             const response = await axios.get( `${baseLink}/search.json?q=${searchTermQuery}&limit=5`)
             const imagePromises = response.data.docs.map(async (book: any) => {
-                const imageUrl = await fetchImageByOLid(book.cover_i);
+                const imageUrl = await fetchImagebyId(book.cover_i);
                 return { ...book, imageUrl }; // Merge book data with image URL
             });
             // Wait for all image requests to complete
@@ -139,11 +139,14 @@ export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
         setLoading(true)
         try {
             const bookResponse = await axios.get( `${baseLink}/works/${OLid}.json`)
-            const imageResponse = await fetchImageByOLid(bookResponse.data.covers[0], imageSize)
+            const imageResponse = await fetchImagebyId(bookResponse.data.covers[0], imageSize)
+
+            // console.log(imageResponse)
             setImageData(imageResponse)
             setData(bookResponse.data)
+            console.log(bookResponse.data)
             const author = await axios.get(`${baseLink}${bookResponse.data.authors[0].author.key}.json`)
-            console.log(bookResponse.data.authors[0].author.key)
+            // console.log(bookResponse.data.authors[0].author.key)
             setAuthorData(author.data.name)
 
         } catch (error: any) {

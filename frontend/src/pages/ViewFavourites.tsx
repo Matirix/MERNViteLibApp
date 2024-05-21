@@ -4,10 +4,12 @@ import { RootState } from '../store';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Spinner from '../Spinner';
+import { fetchImageByOLid, fetchImagebyId } from '../utils/LibHooks';
 
 const ViewFavourites = () => {
     const userInfo = useSelector((state: RootState) => state.auth.userInfo); // Ensure correct access to userInfo
     const [favourites, setFavourites] = useState([]);
+    const [bookImages, setBookImages] = useState([]); // Add a state to store book images
     const [loading, setLoading] = useState(true); // Add a loading state
     const [error, setError] = useState(''); // Add an error state
 
@@ -24,6 +26,7 @@ const ViewFavourites = () => {
                         return { ...book, details: response.data };
                     })
                 );
+                
                 setFavourites(books);
                 setLoading(false);
             } catch (error: any) {
@@ -53,8 +56,8 @@ const ViewFavourites = () => {
             <ul>
                 {favourites.map((book) => (
                     <li key={book?.olid}>
+                        <img src={book?.imageUri} alt={book?.title} />
                         <h2>{book?.title}</h2>
-                        <p>{book?.details.description ? book.details?.description.value : 'No description available'}</p>
                     </li>
                 ))}
             </ul>

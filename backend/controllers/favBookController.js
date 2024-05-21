@@ -51,6 +51,7 @@ export const postFavBook = asyncHandler(async(req, res) => {
         title: req.body.title,
         userId: req.user._id,
         olid: req.body.olid,
+        imageUri: req.body.imageUri,
     })
     const favBookEntry = await FavBook.create(newFavBook);
     return res.status(201).json({

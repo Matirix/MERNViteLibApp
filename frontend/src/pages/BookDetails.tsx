@@ -22,6 +22,7 @@ const BookDetails = () => {
             const favBook = await axios.post('/api/favBook/', {
                 title: data?.title,
                 olid: id,
+                imageUri: imageData,
             }, { withCredentials: true })
             toast.success(favBook.data.message)
         } catch (error: any) {         
