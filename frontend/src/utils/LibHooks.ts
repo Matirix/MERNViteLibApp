@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
-interface OLBook {
+export interface OLBook {
     title: string;
     key: string;
     authors: AuthorRole[];
@@ -50,6 +50,7 @@ export const fetchImagebyId = async (coverId: string, imageSize: string = 'M') =
     const response = await axios.get(`https://covers.openlibrary.org/b/id/${coverId}-${imageSize}.jpg`)
     return response.config.url
 }
+
 
 interface FavBook {
     title: string;
@@ -131,6 +132,18 @@ export const useBooks = (searchTerm: string) => {
 }
 
 
+
+// Fetch all the authors name from the OpenLibrary API
+export const fetchAuthorData = async (authors: AuthorRole[]) => {
+    const authorPromises = authors.map(async (authorObj: any) => {
+        const response = await axios.get(`${baseLink}${authorObj.author.key}.json`);
+        return response.data.name; // Assuming you need the data property from the response
+    });
+    const authorData = await Promise.all(authorPromises);
+    return authorData
+}
+
+
 // @desc Get's Book from the OpenLibrary API by OLid
 // @params OLid: string
 // @params imageSize: string
@@ -158,6 +171,7 @@ export const useBookWorkHook = (OLid: string, imageSize: string = 'M') => {
                 const response = await axios.get(`${baseLink}${authorObj.author.key}.json`);
                 return response.data.name; // Assuming you need the data property from the response
             });
+
             const authors = await Promise.all(authorPromises);
             setAuthorData(authors)
 

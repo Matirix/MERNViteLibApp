@@ -6,29 +6,40 @@ import RatingSystem from '../components/RatingSystem';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { generateAuthorNames } from '../utils/strings';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
+import { removeFavourite } from '../slices/favSlice';
 
 const BookDetails = () => {
     const { id } = useParams();
     const { data, imageData, loading, authorData } = useBookWorkHook(id || '', 'L');
     const [favLoading, setFavLoading] = useState(false);
-    // const [isFavorited, setIsFavorited] = useState(false);
-    // const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+    // const favData = useSelector((state: RootState) => state.favouites.items);
+    // const dispatch = useDispatch();
+    
+    
 
     const addToFavourites = async() => {
-        setFavLoading(true);
-        try {
-            const favBook = await axios.post('/api/favBook/', {
-                title: data?.title,
-                olid: id,
-                imageUri: imageData,
-            }, { withCredentials: true })
-            toast.success(favBook.data.message)
-        } catch (error: any) {         
-            console.log(error)
-            toast.error(error.response.data.message)
-        } finally {
-            setFavLoading(false);
-        }
+        // dispatch(removeFavourite(id ?? ''))
+
+        // console.log(favData)
+
+
+
+        // setFavLoading(true);
+        // try {
+        //     const favBook = await axios.post('/api/favBook/', {
+        //         title: data?.title,
+        //         olid: id,
+        //         imageUri: imageData,
+        //     }, { withCredentials: true })
+        //     toast.success(favBook.data.message)
+        // } catch (error: any) {         
+        //     console.log(error)
+        //     toast.error(error.response.data.message)
+        // } finally {
+        //     setFavLoading(false);
+        // }
     }
 
     // useEffect(() => {
@@ -43,6 +54,9 @@ const BookDetails = () => {
     //     getFavBook()
 
     // }, [id])
+
+    // console.log(authorData)
+
 
 
 
@@ -70,10 +84,10 @@ const BookDetails = () => {
                             {/* Header */}
                             <div className="mb-3">
                                 <h1 className="text-2xl font-bold">{data?.title}</h1>
-                                <p className="text-lg italic">{generateAuthorNames(authorData ?? [])}</p>
+                                <p className="text-lg italic">{generateAuthorNames(authorData)}</p>
                             </div>
                             {/* Description */}
-                            <p className="text-sm">{data?.description}</p>
+                            <p className="text-sm">{data?.description.value}</p>
                         </div>
                     </div>
                 </div>

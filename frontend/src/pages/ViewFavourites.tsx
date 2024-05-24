@@ -12,13 +12,17 @@ const ViewFavourites = () => {
     if (error) {
         return <>{error}</>; // Display error message
     }
+    console.log(favourites)
+    
 
     return (
         <div className='p-6'>
             <h1 className='text-xl mb-5'>{`Favourites: ${favourites.length}`}</h1>
             <div className="flex items-start justify-start flex-wrap gap-4">
                 {favourites.map((book) => (
-                    <BookCard title={book.title} imageUri={book.imageUri} olid={book.olid} author={book.details.authors}/>
+                    <BookCard key={book.olid} title={book.title} imageUri={book.imageUri} olid={book.olid} 
+                    author={book.details.authors}
+                    />
                 ))}
             </div>
         </div>

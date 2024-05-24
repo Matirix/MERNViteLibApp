@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice.ts';
 import { apiSlice } from './slices/apiSlice.ts';
+import favouritesReducer from './slices/favSlice.ts';
 
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
+        favouites: favouritesReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
  
     },
