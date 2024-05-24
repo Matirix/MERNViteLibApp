@@ -2,6 +2,7 @@ import React from 'react'
 import { FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { generateAuthorNames } from '../utils/strings';
+import { fetchAuthors } from '../utils/LibHooks';
 
 interface BookCardProps {
   title: string;
@@ -11,6 +12,7 @@ interface BookCardProps {
 }
 const BookCard: React.FC<BookCardProps> = ({title, imageUri, olid, author=''}) => { 
   const authorNames = generateAuthorNames(Array.isArray(author) ? author : [author]);
+
 
 
   

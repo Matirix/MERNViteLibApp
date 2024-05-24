@@ -21,7 +21,7 @@ const ViewFavourites = () => {
             <div className="flex items-start justify-start flex-wrap gap-4">
                 {favourites.map((book) => (
                     <BookCard key={book.olid} title={book.title} imageUri={book.imageUri} olid={book.olid} 
-                    author={book.details.authors}
+                    author={''}
                     />
                 ))}
             </div>

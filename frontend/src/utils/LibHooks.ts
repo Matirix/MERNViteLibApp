@@ -143,6 +143,14 @@ export const fetchAuthorData = async (authors: AuthorRole[]) => {
     return authorData
 }
 
+export const fetchAuthors = async (authors: AuthorRole[]) => {
+    const authorPromises = authors.map(async (authorObj: any) => {
+        const response = await axios.get(`${baseLink}${authorObj.author.key}.json`);
+        return response.data.name; // Assuming you need the data property from the response
+    });
+    const authorData = await Promise.all(authorPromises);
+    return authorData
+}
 
 // @desc Get's Book from the OpenLibrary API by OLid
 // @params OLid: string
