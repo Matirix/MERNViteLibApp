@@ -143,6 +143,7 @@ export const fetchAuthorData = async (authors: AuthorRole[]) => {
     return authorData
 }
 
+// Fetch all the authors name from the OpenLibrary API
 export const fetchAuthors = async (authors: AuthorRole[]) => {
     const authorPromises = authors.map(async (authorObj: any) => {
         const response = await axios.get(`${baseLink}${authorObj.author.key}.json`);
